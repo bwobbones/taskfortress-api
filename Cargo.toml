@@ -1,0 +1,11 @@
+[package]
+name = "taskfortress-api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = "0.5.1"
+shuttle-rocket = "0.47.0"
+shuttle-runtime = "0.47.0"
+tokio = "1.26.0"
+rand = "0.8"
