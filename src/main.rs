@@ -1,6 +1,8 @@
-use rocket::http::{Status, ContentType};
+use rocket::http::{Status};
 use rocket::data::{Data, ToByteUnit};
 use rocket::{http::uri::Absolute, tokio::fs::File};
+
+use rocket_dyn_templates::{context, Template};
 
 #[macro_use] 
 extern crate rocket;
@@ -13,30 +15,30 @@ const ID_LENGTH: usize = 3;
 const HOST: Absolute<'static> = uri!("http://localhost:8000");
 
 #[get("/")]
-fn json() -> (Status, (ContentType, &'static str)) {
-    (Status::ImATeapot, (ContentType::JSON, "{ \"hi\": \"world\" }"))
+async fn index() -> Result<Template, Status>  {
+    // Using the `context! { }` macro.
+    Ok(Template::render(
+        "index",
+        context! {
+        },
+    ))
 }
 
-#[get("/<id>")]
+#[get("/api/v1/<id>")]
 async fn retrieve(id: PasteId<'_>) -> Option<File> {
     File::open(id.file_path()).await.ok()
 }
 
-#[post("/", data = "<paste>")]
+#[post("/api/v1", data = "<paste>")]
 async fn upload(paste: Data<'_>) -> std::io::Result<String> {
     let id = PasteId::new(ID_LENGTH);
     paste.open(128.kibibytes()).into_file(id.file_path()).await?;
     Ok(uri!(HOST, retrieve(id)).to_string())
 }
 
-// #[shuttle-runtime::main];
-// async fn main() -> shuttle_runtime::ShuttleApp {
-//     rocket::build().mount("/", routes![json, retrieve, upload])
-// }
-
 #[shuttle_runtime::main]
 async fn rocket() -> shuttle_rocket::ShuttleRocket {
-    let rocket = rocket::build().mount("/", routes![json, retrieve, upload]);
-
+    let rocket = rocket::build().attach(Template::fairing()).mount("/", routes![index, retrieve, upload]);
+    
     Ok(rocket.into())
 }
