@@ -3,4 +3,6 @@ target/
 
 upload/*
 
+node_modules/*
+
 Cargo.lock
