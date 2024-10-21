@@ -36,7 +36,6 @@ async fn upload(paste: Data<'_>) -> std::io::Result<String> {
     Ok(uri!(HOST, retrieve(id)).to_string())
 }
 
-// Test comment - to be removed
 #[shuttle_runtime::main]
 async fn rocket() -> shuttle_rocket::ShuttleRocket {
     let rocket = rocket::build()
