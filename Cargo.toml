@@ -11,7 +11,14 @@ tokio = "1.26.0"
 rand = "0.8"
 serde = "1.0.210"
 handlebars = "6.1.0"
+cargo-husky = "1.5.0"
+install = "0.0.0"
 
 [dependencies.rocket_dyn_templates]
 version = "0.2.0"
 features = ["handlebars", "tera", "minijinja"]
+
+[dev-dependencies.cargo-husky]
+version = "1"
+default-features = false # Disable features which are enabled by default
+features = ["run-cargo-fmt"]

@@ -1,2 +1,2 @@
+#!/bin/sh\necho "Running npm-based pre-commit hook"
 pnpm exec lint-staged
-cargo fmt
