@@ -41,7 +41,8 @@ async fn rocket() -> shuttle_rocket::ShuttleRocket {
     let rocket = rocket::build()
         .attach(Template::fairing())
         .mount("/", routes![index, retrieve, upload])
-        .mount("/js", FileServer::from(relative!("templates/js")));
+        .mount("/js", FileServer::from(relative!("templates/js")))
+        .mount("/static", FileServer::from(relative!("templates/static")));
 
     Ok(rocket.into())
 }
