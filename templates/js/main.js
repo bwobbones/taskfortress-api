@@ -1,3 +1,3 @@
-import { onLoad } from "./data.mjs";
+import { onLoad } from "./onLoad.mjs";
 
 onLoad();

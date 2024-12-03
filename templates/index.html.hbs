@@ -8,7 +8,7 @@
     <li class="list-group-item">And a fifth one</li>
   </ul>
 
-  <button hx-swap="outerHTML" hx-ext="localStorageHandler">Click Me</button>
+  <button hx-swap="outerHTML" hx-on:click="storageGet()">Click Me</button>
 
   <script type="module" src="js/main.js"></script>
   <script src="https://unpkg.com/htmx.org@2.0.2"></script>
@@ -25,8 +25,7 @@
     crossorigin="anonymous"
   ></script>
   {{! <script>
-    function localStorageHandler() { console.log('hey');
-    localStorage.setItem('myData', inputValue.value); }
+    
   </script> }}
 
 </html>
